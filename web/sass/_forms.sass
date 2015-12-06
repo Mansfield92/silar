@@ -1,0 +1,40 @@
+.add_form
+  background: $transparent-back
+  padding: 10px
+  margin-bottom: 10px
+  +media($tablet)
+    padding: 20px
+    margin-bottom: 20px
+  &__row
+    position: relative
+    margin-bottom: 4px
+    &:last-child
+      margin-bottom: 0
+
+    label
+      width: 100%
+      line-height: 45px
+      text-align: left
+      +media($phone)
+        text-align: right
+        position: absolute
+        left: 0
+        width: 150px
+
+    input
+      @extend %basic-input
+      width: 100%
+      +media($phone)
+        width: calc(100% - 170px)
+        margin-left: 170px
+    > div
+      +media($phone)
+        width: calc(100% - 170px) !important
+        margin-left: 170px !important
+      input
+        cursor: pointer
+      &:hover
+        button
+          color: $color-black
+          &:before
+            +scaleX(1)

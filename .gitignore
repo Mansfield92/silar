@@ -1,0 +1,9 @@
+node_modules/
+web/uploads/*
+web/upload_pic/*
+.sass-cache/
+*.css.map
+*~
+.DS_Store
+._*
+.idea

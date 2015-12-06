@@ -1,0 +1,116 @@
+body, html
+  min-width: 100%
+  min-height: 100%
+
+*
+  +box-sizing(border-box)
+  font-family: $font-family-sans-serif
+
+body
+  display: block
+  padding-top: 60px
+  +media($tablet)
+    padding-top: 70px
+  background: url("../img/back.jpg") no-repeat center center fixed
+  +background-size('cover')
+
+.container
+  padding: 0 10px
+  +media($tablet)
+    padding: 0 20px
+p
+  margin: 0
+  padding: 0
+
+.btn-back
+  width: 100%
+  position: relative
+  margin: 0 0 10px 0
+  +media($phone)
+    width: auto
+  +media($tablet)
+    margin: 0 0 20px 0
+  +media(1400px)
+    margin: 0
+    position: absolute
+    top: 0
+    left: 20px
+
+.container
+  +media($tablet)
+    max-width: 710px
+
+  +media($small-desktop)
+    max-width: 1130px
+
+  &-back
+    +media(1400px)
+      display: block
+      width: 100%
+      max-width: 100%
+      position: absolute
+      padding-left: 0
+
+%btn-basic
+  font-weight: bold
+  padding: 15px 30px
+  background: $color-dark
+  border: none
+  color: rgba(255,255,255,0.7)
+  position: relative
+  transform: translateZ(0px)
+  +transition(0.3s)
+  +font(15px,15px)
+
+  &:hover
+    color: $color-black
+    &:before
+      +scaleX(1)
+
+  &:before
+    background: $color-white none repeat scroll 0 0
+    bottom: 0
+    left: 0
+    right: 0
+    top: 0
+    content: ""
+    position: absolute
+    z-index: -1
+    +scaleX(0)
+    +transform-origin(0 50% 0)
+    +transition(0.3s transform ease-out)
+  &.btn-only-top
+    margin-top: 10px
+    +media($tablet)
+      margin-top: 20px
+
+.btn-basic
+  @extend %btn-basic
+
+%basic-input
+  display: block
+  padding: 15px 30px
+  border: none
+  position: relative
+  background: $color-dark
+  color: rgba(255,255,255,0.7)
+  +size(100%,auto)
+  +transition(0.3s)
+  +font(15px,15px)
+  +border-radius(0)
+  box-shadow: 0 0 5px rgba(50, 50, 50, 0.6) inset
+  &.form-control
+    &:focus
+      //box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2) inset, 0 0 4px rgba(255, 255, 255, 0.6)
+      box-shadow: 0 0 7px rgba(0, 0, 0, 1)
+
+//input[type='text'], input[type="file"]
+//  @extend %basic-input
+
+//.add_form__row
+//  > div
+//    @extend %basic-input
+#loader_back
+  z-index: 5
+  +opacity(1)
+  background: #1F1F1F

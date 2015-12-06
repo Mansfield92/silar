@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="css/login.min.css" rel="stylesheet">
+<link href="css/jquery-ui.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type='text/javascript' src='js/jquery.tipsy.js'></script>
+<title>Login</title>
+<script>
+
+    $(function () {
+        $.fn.center = function () {
+            this.css("position", "absolute");
+            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop() / 2) + "px");
+            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+            return this;
+        };
+        $.fn.centerTop = function () {
+            this.css("marginTop", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop() / 2) + "px");
+            return this;
+        };
+    });
+    $(document).keypress(function (e) {
+        if (e.which == 13) {
+            try_login();
+        }
+    });
+
+
+    window.onload = function () {
+        $("#loader").center();
+        if (/msie/.test(navigator.userAgent.toLowerCase())) {
+            alert('Go fuck yourself with ' + navigator.userAgent);
+        }
+        $('input').tipsy({fade: true, gravity: 'w'});
+        $('.login').center();
+        $('input[name="login_name"]').focus();
+        $("input[type=checkbox]").button();
+        $("label[for='animation']").attr('class', 'enviar');
+        $("#animation").button();
+//        setTimeout(function(){
+            destroy_loader();
+//        },1000);
+
+    };
+    function show_loader() {
+        $("#loader").center();
+        $("#loader_back").show();
+        $("#loader").show();
+    }
+    function try_login() {
+        if ($('#wrong_pass')) {
+            $('#wrong_pass').remove();
+        }
+        if($('input[name="login_pw"]').val().length < 4 || $('input[name="login_name"]').val().length < 4){
+            $('body').append("<div id='wrong_pass'>Špatné jméno nebo heslo.</div>");
+            $('#wrong_pass')
+                    .css('left', (parseInt($(window).width() / 2) - $('#wrong_pass').width() / 2) - 20)
+                    .show()
+                    .addClass('active')
+                    .animate({"top": "+=100px"}, "slow")
+                    .effect("bounce", {times: 4}, 500).fadeOut(5000);
+        }else {
+            show_loader();
+            $.ajax({
+                type: 'POST', url: '/login', data: $('#login_form').serialize(),
+                success: function (data) {
+                    destroy_loader();
+                    if (data == 'false') {
+                        $('body').append("<div id='wrong_pass'>Špatné jméno nebo heslo.</div>");
+                        $('#wrong_pass')
+                                .css('left', (parseInt($(window).width() / 2) - $('#wrong_pass').width() / 2) - 20)
+                                .show()
+                                .addClass('active')
+                                .animate({"top": "+=100px"}, "slow")
+                                .effect("bounce", {times: 4}, 500).fadeOut(5000);
+                    } else {
+                        window.location.reload(true);
+                    }
+                }
+            });
+        }
+    }
+
+    $(window).resize(function () {
+        $('.login').center();
+    });
+
+    function destroy_loader() {
+        $("#loader").hide();
+        $("#loader_back").fadeOut('slow');
+    }
+</script>
+</head>
+
+<body>
+<div id="loader_back" class="ui-widget-overlay ui-front">
+    <div id="loader" class="ui-front"><img src="img/loading.gif" alt="loader"/></div>
+</div>
+<div id="bagr"></div>
+<section class="login">
+    <div class="titulo">Přihlášení k aplikaci</div>
+    <form method="post" enctype="application/x-www-form-urlencoded" id="login_form">
+        <input type="text" name="login_name" title="Uživatelské jméno" placeholder="Uživatelské jméno" data-icon="U">
+        <input type="password" name="login_pw" title="Heslo" placeholder="Heslo" data-icon="x">
+        <a onclick="try_login();" class="enviar btn-basic btn-back">Přihlásit se</a>
+    </form>
+</section>
+</body>
+</html>

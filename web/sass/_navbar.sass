@@ -1,0 +1,44 @@
+.navbar
+
+  &-brand
+    +transition(0.5s)
+
+    img
+      margin-top: -5px
+      float: right
+      margin-left: 20px
+      +opacity(0.6)
+      +transition(0.5s)
+
+    &:hover
+      color: #ffc520
+      img
+        +scale(1.2)
+        +opacity(1)
+
+.navbar-nav
+  float: none
+
+  a > img
+    position: absolute
+    top: 8px
+    left: -20px
+    +opacity(0.7)
+    +transition(0.5s)
+    +media($tablet)
+      top: 13px
+
+.icon-menu
+  padding-left: 35px
+
+  +media($tablet)
+    float: right !important
+
+    a
+      +transition(0.5s)
+      padding-right: 0 !important
+
+  &:hover
+    a > img
+      +scale(1.2)
+      +opacity(1)
