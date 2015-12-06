@@ -41,11 +41,15 @@ var server = http.createServer(function (request, response) {
                     filePath = "web/views/index.html";
                 }else filePath = "web/views/index-users.html";
             }
+            var absPath = "./" + filePath;
+            serverWorking(response, absPath);
+        } else if(request.url == '/username'){
+                response.end($App.full_name);
         } else {
             filePath = "web/" + request.url;
+            var absPath = "./" + filePath;
+            serverWorking(response, absPath);
         }
-        var absPath = "./" + filePath;
-        serverWorking(response, absPath);
     } else if (request.method === "POST") {
         $App.handleRequest(request, response);
     }
