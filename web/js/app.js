@@ -34,3 +34,13 @@ $(function(){
 $App.logout = function(){
     $.ajax({type: 'POST',url: '/logout',data:'logout',success: function (data) {F5();}});
 };
+
+$App.init = function(){
+
+};
+
+$( document ).ready(function() {
+    $("#loader").center();
+    $App.init();
+    destroy_loader();
+});

@@ -1,0 +1,32 @@
+.user-panel
+  display: none
+  background: $transparent-back
+  position: absolute
+  width: 250px
+  top: 50px
+  right: 0
+  border-top: 1px solid #333
+
+  &-right
+    width: 250px
+    padding: 20px
+
+  &-text
+    text-align: center
+    text-transform: uppercase
+    +font(24px, 32px)
+
+  //&-right
+  .btn-basic
+    width: 100%
+    text-align: center
+    margin: 5px 0 0
+    +media($tablet)
+      margin: 10px 0 0
+
+.icon-menu
+  position: relative
+  +media($tablet)
+    &:hover
+      .user-panel
+        display: block
