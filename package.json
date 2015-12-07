@@ -3,13 +3,17 @@
   "version": "0.0.1",
   "description": "Semestralka",
   "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
     "gulp": "^3.9.0",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
+    "gulp-twig-compile": "^0.1.0",
     "mime": "~1.2.7",
     "mysql": "^2.9.0",
     "nodemon": "^1.8.1",
     "querystring": "^0.2.0",
+    "twig": "^0.8.2",
     "util": "^0.10.3"
   }
 }

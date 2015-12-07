@@ -8,6 +8,13 @@ var $output_dir = './web/css';
 var gulp = require('gulp');
 var	sass = require('gulp-ruby-sass');
 var	rename = require('gulp-rename');
+var twig_compile = require('gulp-twig-compile');
+
+//gulp.task('twig', function() {
+//    gulp.src('./web/twig/*.twig')
+//        .pipe(twig_compile())
+//        .pipe(gulp.dest('./web/views/'))
+//});
 
 /* BASIC SASS TASK*/
 gulp.task('normal', function(){
@@ -33,6 +40,7 @@ gulp.task('login', function(){
 gulp.task('watchers',function(){
     //gulp.watch($input_dir+$watch, ['normal']);
     gulp.watch($input_dir+$watch, ['compressed','login']);
+    //gulp.watch('./web/twig/*.twig', ['twig']);
 });
 
 /* TASK INITIALIZED AT START*/

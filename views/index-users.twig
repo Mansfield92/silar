@@ -1,0 +1,14 @@
+{% extends 'header.twig' %}
+{% block body %}
+
+<div id="header">
+    <span>My Simple Blog</span>
+    <ul id="menu">
+        <li>ABOUT</li>
+        <li>ARTICLES</li>
+        <li>VIDEOS</li>
+        <li>SUBSCRIBE</li>
+    </ul>
+</div>
+<button id="logout" onclick="$App.logout();">logout</button>
+{% endblock %}

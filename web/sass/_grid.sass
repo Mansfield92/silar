@@ -1,0 +1,59 @@
+#grid
+  text-align: center
+
+.grid-item
+  height: 200px
+  padding: 10px
+  margin-bottom: 10px
+  background: rgba(255,255,255,0.75)
+  cursor: pointer
+  +opacity(0.8)
+  +transition(0.5s)
+
+  +media($phone)
+    width: calc(50% - 5px)
+    height: 220px
+    display: inline-block
+    padding: 20px
+    vertical-align: top
+
+    &:nth-child(even)
+      margin-left: 10px
+
+  +media($tablet)
+    width: calc(50% - 10px)
+    margin-bottom: 20px
+
+    &:nth-child(even)
+      margin-left: 20px
+
+  +media($small-desktop)
+    +size(380px,380px)
+
+  //&:last-child
+  //  width: 100%
+  //  max-width: 780px
+
+  &_text
+    +transition(0.5s)
+    line-height: 180px
+    font-size: 35px
+    text-transform: uppercase
+    font-family: $font-family-sans-serif
+
+    +media($small-desktop)
+      line-height: 340px
+      font-size: 50px
+
+  &:hover
+    +opacity(1)
+    background: rgba(255,255,255,0.9)
+
+    img
+      +scale(1.2)
+
+    .grid-item_text
+      text-decoration: underline
+//+media($tablet)
+//  width: 50%
+//  background: #000088
