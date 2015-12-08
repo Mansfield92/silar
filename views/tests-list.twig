@@ -1,0 +1,51 @@
+{% extends 'header.twig' %}
+{% block body %}
+    <section>
+        <div class="container">
+            <button onclick="window.location.replace('/tests-add');" data-action="users-add_form" class="btn-actions btn-add"> Přidat test</button>
+            <div class="search-row">
+                <input type="text" placeholder="Filtrace testů" class="form-control" id="search">
+            </div>
+            <div class="users-list">
+                <div class="users-list_item">
+                    <div class="users-list_item_column">
+                        <div class="users-list_item_text">
+                            Test 1
+                        </div>
+                    </div><div class="users-list_item_column">
+                        <div class="users-list_item_text">
+                            36b
+                        </div>
+                    </div><div class="users-list_item_column">
+                        <div class="users-list_item_text">
+                            Všechny ročníky
+                        </div>
+                    </div><div class="users-list_item_column">
+                        <img alt="icon" src="icons/search.svg">
+                    </div><div class="users-list_item_column">
+                        <img alt="icon" src="icons/delete.svg">
+                    </div>
+                </div>
+                <div class="users-list_item">
+                    <div class="users-list_item_column">
+                        <div class="users-list_item_text">
+                            Test 1
+                        </div>
+                    </div><div class="users-list_item_column">
+                        <div class="users-list_item_text">
+                            36b
+                        </div>
+                    </div><div class="users-list_item_column">
+                        <div class="users-list_item_text">
+                            Všechny ročníky
+                        </div>
+                    </div><div class="users-list_item_column">
+                        <img alt="icon" src="icons/search.svg">
+                    </div><div class="users-list_item_column">
+                        <img alt="icon" src="icons/delete.svg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

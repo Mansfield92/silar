@@ -35,14 +35,14 @@ $App.logout = function(){
     $.ajax({type: 'POST',url: '/logout',data:'logout',success: function (data) {F5();}});
 };
 
-$App.getUser = function(){
-    $.ajax({type: 'GET',url: '/username',success: function (data) {
-        $('.user-panel-text').html(data);
-    }});
-};
+//$App.getUser = function(){
+//    $.ajax({type: 'GET',url: '/username',success: function (data) {
+//        $('.user-panel-text').html(data);
+//    }});
+//};
 
 $App.init = function(){
-    $App.getUser();
+    //$App.getUser();
 };
 
 $( document ).ready(function() {

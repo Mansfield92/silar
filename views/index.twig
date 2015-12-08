@@ -4,17 +4,20 @@
         <div class="container" id="grid">
             <div class="grid-item " data-action="depo-list">
                 <div class="grid-item_text">
-                    Testy
+                    <a href="/tests">
+                        Testy
+                    </a>
                 </div>
             </div><div class="grid-item" data-action="trains-list">
                 <div class="grid-item_text">
                     Výsledky
                 </div>
-            </div><div class="grid-item " data-action="users-list">
+            </div>{% if username == 'admin' %}<div class="grid-item " data-action="users-list">
                 <div class="grid-item_text">
                     Uživatelé
                 </div>
             </div>
+            {% endif %}
         </div>
     </section>
 {% endblock %}
