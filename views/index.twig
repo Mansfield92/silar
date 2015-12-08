@@ -3,18 +3,23 @@
     <section class="index">
         <div class="container" id="grid">
             <div class="grid-item " data-action="depo-list">
-                <a class="grid-item_text">
-                    Testy
-                </a>
+                <div class="grid-item_text">
+                    <a href="/tests">
+                        Testy
+                    </a>
+                </div>
             </div><div class="grid-item" data-action="trains-list">
                 <div class="grid-item_text">
                     Výsledky
                 </div>
-            </div><div class="grid-item " data-action="users-list">
-                <a href="/users-list" class="grid-item_text">
-                    Uživatelé
-                </a>
+            </div>{% if username == 'admin' %}<div class="grid-item " data-action="users-list">
+                <div class="grid-item_text">
+                    <a href="/users-list">
+                        Uživatelé
+                    </a>
+                </div>
             </div>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

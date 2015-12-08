@@ -45,67 +45,81 @@ app.get('/', function (req, response, next) {
             localStorage.clear();
         }, $App.autologout);
     }
-    var filePath = "";
-    if (isLogged()) {
-        if ($App.user_name == 'admin') {
-            filePath = "index.twig";
-        } else filePath = "index-users.twig";
-    } else filePath = "login.twig";
 
-    response.render(filePath);
+    $App.render(response, $App.logged ? 'index' : 'login');
 });
 
 app.get('/username', function (req, response, next) {
     if (isLogged()) {
         response.send($App.user_name);
     } else {
-        response.render("login.twig");
+        $App.render(response, "login");
     }
 });
 
 app.get('/delete', function (req, response, next) {
-    if (isLogged()) {
-        var $q = "DELETE FROM users WHERE id_user = '" + req.query.id_user + "'";
-        var query = connection.query($q, function (err, rows) {
-            if (err) {
-                console.log(err);
-            } else {
-                log('deleted?' + $q);
-                $q = "SELECT * FROM users WHERE nick != 'admin'";
-                query = connection.query($q, function (err, rows) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        response.render('users-list.twig', {"rows": rows});
-                    }
-                });
-            }
-        });
-    } else {
-        response.render("login.twig");
-    }
+    var $q = "DELETE FROM users WHERE id_user = '" + req.query.id_user + "'";
+    var query = connection.query($q, function (err, rows) {
+        if (err) {
+            console.log(err);
+        } else {
+            log('deleted?' + $q);
+            $q = "SELECT * FROM users WHERE nick != 'admin'";
+            query = connection.query($q, function (err, rows) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    $App.render(response, 'users-list', {"rows": rows});
+                }
+            });
+        }
+    });
 });
 
-
 app.post('/add-user', function (req, response, next) {
-    if (isLogged()) {
-        var $q = "INSERT INTO `silar`.`users` (`id_user`, `nick`, `pw`, `fullname`) VALUES (NULL, ?, MD5(?), ?)";
-        var query = connection.query($q, [req.body.username, req.body.password, req.body.fullname], function (err, rows) {
-            if (err) {
-                console.log(err);
-            }
-        });
-        $q = "SELECT * FROM users WHERE nick != 'admin'";
-        query = connection.query($q, function (err, rows) {
-            if (err) {
-                console.log(err);
-            } else {
-                response.render('users-list.twig', {"rows": rows});
-            }
-        });
+    var $q = "INSERT INTO `silar`.`users` (`id_user`, `nick`, `pw`, `fullname`) VALUES (NULL, ?, MD5(?), ?)";
+    var query = connection.query($q, [req.body.username, req.body.password, req.body.fullname], function (err, rows) {
+        if (err) {
+            console.log(err);
+        }
+    });
+    $q = "SELECT * FROM users WHERE nick != 'admin'";
+    query = connection.query($q, function (err, rows) {
+        if (err) {
+            console.log(err);
+        } else {
+            $App.render(response, 'users-list', {"rows": rows});
+        }
+    });
+});
+
+app.get('/tests', function (req, response, next) {
+    $App.render(response, 'tests-list');
+});
+
+app.get('/tests-add', function (req, response, next) {
+    $App.render(response, 'tests-form');
+});
+
+$App.render = function (res, page, params) {
+    if (page == 'login') {
+        res.render('login.twig');
     } else {
-        response.render("login.twig");
+        if ($App.logged) {
+            params = params || {};
+            params.username = $App.user_name;
+            res.render(page + '.twig', params);
+        } else {
+            res.render('_denied.twig');
+        }
     }
+};
+
+//app.get('/username', function (req, response, next) {
+//    response.send($App.user_name);
+//});
+app.get('/login-form', function (req, response, next) {
+    $App.render(response, 'login');
 });
 
 function log(msg) {
@@ -120,28 +134,19 @@ function isLogged() {
 }
 
 app.get('/users-add', function (req, response, next) {
-    if (isLogged()) {
-        response.render('users-add.twig');
-    } else {
-        response.render("login.twig");
-    }
+    $App.render(response, 'users-add');
 });
 
 
 app.get('/users-list', function (req, response, next) {
-    if (isLogged()) {
-        var $q = "SELECT * FROM users WHERE nick != 'admin'";
-        var query = connection.query($q, function (err, rows) {
-            if (err) {
-                console.log(err);
-            } else {
-                response.render('users-list.twig', {"rows": rows});
-
-            }
-        });
-    } else {
-        response.render("login.twig");
-    }
+    var $q = "SELECT * FROM users WHERE nick != 'admin'";
+    var query = connection.query($q, function (err, rows) {
+        if (err) {
+            console.log(err);
+        } else {
+            $App.render(response, 'users-list', {"rows": rows});
+        }
+    });
 });
 
 app.use('/login', function (req, response, next) {
@@ -152,13 +157,13 @@ app.use('/login', function (req, response, next) {
             console.log(err);
         } else {
             if (rows.length > 0) {
-                response.send('good job');
                 console.log('User logged: ' + rows[0].nick + '=>' + rows[0].fullname);
                 $App.logged = true;
                 $App.user_name = rows[0].nick;
                 $App.full_name = rows[0].fullname;
                 localStorage.setItem('logged', true);
-                //window.localStorage.setItem('username',$App.user_name);
+
+                $App.render(response, 'index');
                 $App.logout = setTimeout(function () {
                     $App.logged = false;
                     console.log('Odhlaseno');
