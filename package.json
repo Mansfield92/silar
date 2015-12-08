@@ -9,6 +9,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
     "gulp-twig-compile": "^0.1.0",
+    "localStorage": "^1.0.3",
+    "localstorage": "^0.1.0",
     "mime": "~1.2.7",
     "mysql": "^2.9.0",
     "nodemon": "^1.8.1",

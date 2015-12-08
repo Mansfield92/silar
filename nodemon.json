@@ -1,4 +1,4 @@
 {
   "verbose": true,
-  "ignore": ["web/*","node_modules/*",".idea",".idex/*"]
+  "ignore": ["web/*","node_modules/*",".idea",".idea/*"]
 }

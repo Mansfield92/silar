@@ -41,12 +41,27 @@ $App.getUser = function(){
     }});
 };
 
+$App.centerGrid = function(){
+    $grid = $('#grid');
+    $grid.centerTop().css('marginTop',Math.max(0,parseInt($grid.css('marginTop'))-30) + "px");
+
+};
+
 $App.init = function(){
     $App.getUser();
+    $App.resize();
+};
+
+$App.resize = function(){
+    $App.centerGrid();
 };
 
 $( document ).ready(function() {
     $("#loader").center();
     $App.init();
     destroy_loader();
+});
+
+$( window ).resize(function() {
+    $App.resize();
 });

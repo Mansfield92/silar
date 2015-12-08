@@ -2,58 +2,67 @@
   text-align: center
 
 .grid-item
-  height: 200px
+  height: 280px
+  width: 280px
   padding: 10px
   margin-bottom: 10px
   background: rgba(255,255,255,0.75)
   cursor: pointer
+  display: inline-block
+  +border-radius(50%)
   +opacity(0.8)
   +transition(0.5s)
 
   +media($phone)
-    width: calc(50% - 5px)
-    height: 220px
-    display: inline-block
+    +size(300px, 300px)
     padding: 20px
     vertical-align: top
-
-    &:nth-child(even)
-      margin-left: 10px
+    margin-right: 20px
 
   +media($tablet)
-    width: calc(50% - 10px)
+    +size(calc(1050px / 3),calc(1050px / 3))
     margin-bottom: 20px
-
-    &:nth-child(even)
-      margin-left: 20px
+    margin-right: 20px
 
   +media($small-desktop)
-    +size(380px,380px)
+    +size(400px,400px)
+    margin-right: 0
+    &:first-child
+      margin-right: 70px
 
-  //&:last-child
-  //  width: 100%
-  //  max-width: 780px
+  &:last-child
+    margin-right: 0
 
   &_text
     +transition(0.5s)
-    line-height: 180px
+    line-height: 260px
     font-size: 35px
     text-transform: uppercase
+    display: block
+    color: $color-black
     font-family: $font-family-sans-serif
 
+    &:hover
+      text-decoration: none
+      color: $color-black
+
+    +media($tablet)
+      line-height: 310px
+
     +media($small-desktop)
-      line-height: 340px
+      line-height: 360px
       font-size: 50px
 
   &:hover
     +opacity(1)
+    +transform(rotate(360deg))
     background: rgba(255,255,255,0.9)
 
     img
       +scale(1.2)
 
     .grid-item_text
-      text-decoration: underline
+      //text-decoration: underline
 //+media($tablet)
 //  width: 50%
 //  background: #000088

@@ -15,7 +15,8 @@ $(function () {
         return this;
     };
     $.fn.centerTop = function () {
-        this.css("marginTop", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop() / 2) + "px");
+        this.css("marginTop", Math.max(0, ((($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop() / 2)) + "px");
+        log(Math.max(0, ((($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop() / 2)));
         return this;
     };
 });

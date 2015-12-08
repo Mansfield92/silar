@@ -1,0 +1,24 @@
+{% extends 'header.twig' %}
+{% block body %}
+    <section>
+        <div class="container">
+            <div class="add_form">
+                <form method="post" action="/add-user">
+                <div class="add_form__row">
+                    <label for="username">Uživatelské jméno</label>
+                    <input type="text" placeholder="Uživatelské jméno" value="" name="username">
+                </div>
+                <div class="add_form__row">
+                    <label for="password">Heslo</label>
+                    <input type="password" placeholder="Heslo" value="" name="password">
+                </div>
+                <div class="add_form__row">
+                    <label for="fullname">Celé jméno</label>
+                    <input type="text" placeholder="Celé jméno" value="" name="fullname">
+                </div>
+                <button class='btn-basic btn-only-top center-block ajax-action'>Vytvořit uživatele</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
