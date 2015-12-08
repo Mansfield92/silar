@@ -44,16 +44,39 @@ app.get('/', function (req, response, next) {
     }
     var filePath = "";
     if ($App.logged) {
-        if ($App.user_name == 'admin') {
-            filePath = "index.twig";
-        } else filePath = "index-users.twig";
-    } else filePath = "login.twig";
+        filePath = "index";
+    } else filePath = "login";
 
-    response.render(filePath);
+    $App.render(response, filePath);
 });
 
-app.get('/username', function (req, response, next) {
-    response.send($App.user_name);
+app.get('/tests',function(req, response, next){
+    $App.render(response,'tests-list');
+});
+
+app.get('/tests-add',function(req, response, next){
+    $App.render(response,'tests-form');
+});
+
+$App.render = function(res,page, params){
+    if(page == 'login'){
+        res.render('login.twig');
+    }else {
+        if($App.logged) {
+            params = params || {};
+            params.username = $App.user_name;
+            res.render(page + '.twig', params);
+        }else{
+            res.render('_denied.twig');
+        }
+    }
+};
+
+//app.get('/username', function (req, response, next) {
+//    response.send($App.user_name);
+//});
+app.get('/login-form', function (req, response, next) {
+    $App.render(response,'login');
 });
 app.use('/login', function (req, response, next) {
     var $q = "SELECT * FROM users WHERE nick = '" + req.body.login_name + "' and pw = md5('" + req.body.login_pw + "')";
@@ -63,12 +86,11 @@ app.use('/login', function (req, response, next) {
             console.log(err);
         } else {
             if (rows.length > 0) {
-                response.send('good job');
                 console.log('User logged: ' + rows[0].nick + '=>' + rows[0].fullname);
                 $App.logged = true;
                 $App.user_name = rows[0].nick;
                 $App.full_name = rows[0].fullname;
-                //window.localStorage.setItem('username',$App.user_name);
+                $App.render(response,'index');
                 $App.logout = setTimeout(function () {
                     $App.logged = false;
                     console.log('zmizni!');
