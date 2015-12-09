@@ -17,7 +17,7 @@
                         <label>Název otázky</label>
                         <input type="text" placeholder="Název otázky" value="" name="question0">
                     </div>
-                    <div class="add_form__row question">
+                    <div class="add_form__row">
                         <label>Počet bodů</label>
                         <input type="number" placeholder="Počet bodů" value="" name="points0">
                     </div>
@@ -26,16 +26,11 @@
                     --><input class="checkbox" type="checkbox" name="right0-0" id="right0-0"><!--
                     --><label for="right0-0">Správná odpověď</label>
                     </div>
-                    <div class="add_form__answers answer"><!--
-                    --><input type="text" placeholder="Odpověď" value="" name="answer0-0"><!--
-                    --><input class="checkbox" type="checkbox" name="right0-0" id="right0-1"><!--
-                    --><label for="right0-1">Správná odpověď</label>
-                    </div>
-                    <button class='btn-basic center-block ajax-action' data-action="new-answer%0">Přidat další odpověď</button>
+                    <button class='btn-basic center-block ajax-action' data-action="new-answer">Přidat další odpověď</button>
                     <div class="add_form__splitter">&nbsp;</div>
                     <button class='btn-basic center-block ajax-action' data-action="new-question">Přidat další otázku</button>
                     <div class="add_form__splitter">&nbsp;</div>
-                    <button class='btn-basic btn-only-top center-blockr'>Vytvořit test</button>
+                    <button class='btn-basic btn-only-top center-block btn-test' onclick="$App.testForms();">Vytvořit test</button>
                 </form>
             </div>
         </div>
