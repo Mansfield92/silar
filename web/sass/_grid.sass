@@ -4,7 +4,7 @@
 .grid-item
   height: 280px
   width: 280px
-  padding: 10px
+  //padding: 10px
   margin-bottom: 10px
   background: rgba(255,255,255,0.75)
   cursor: pointer
@@ -15,7 +15,7 @@
 
   +media($phone)
     +size(300px, 300px)
-    padding: 20px
+    //padding: 20px
     vertical-align: top
     margin-right: 20px
 
@@ -52,6 +52,18 @@
     +media($small-desktop)
       line-height: 360px
       font-size: 50px
+
+    a
+      display: block
+      padding: 10px
+      color: $color-black
+
+      &:hover
+        text-decoration: none
+        color: $color-black
+
+      +media($phone)
+        padding: 20px
 
   &:hover
     +opacity(1)

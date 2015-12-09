@@ -13,8 +13,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 </head>
@@ -45,7 +45,7 @@
                         <div class="user-panel-left">
                         </div><div class="user-panel-right">
                             <div class="user-panel-text">{{ username }}</div>
-                            <button onclick="$App.logout();" class="btn-basic">Odhlásit se</button>
+                            <button onclick="window.location.replace('/logout')" class="btn-basic">Odhlásit se</button>
                         </div>
                     </div>
                 </li>

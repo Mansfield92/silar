@@ -102,10 +102,10 @@
 <div id="bagr"></div>
 <section class="login">
     <div class="titulo">Přihlášení k aplikaci</div>
-    <form method="post" enctype="application/x-www-form-urlencoded" id="login_form">
+    <form method="post" enctype="application/x-www-form-urlencoded" id="login_form" action="/login">
         <input type="text" name="login_name" title="Uživatelské jméno" placeholder="Uživatelské jméno" data-icon="U">
         <input type="password" name="login_pw" title="Heslo" placeholder="Heslo" data-icon="x">
-        <a onclick="try_login();" class="enviar btn-basic btn-back">Přihlásit se</a>
+        <button type="submit" class="enviar btn-basic btn-back">Přihlásit se</button>
     </form>
 </section>
 </body>

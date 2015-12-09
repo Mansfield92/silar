@@ -9,7 +9,6 @@ var Twig = require('twig');
 var url = require('url');
 var express = require('express');
 var bodyParser = require('body-parser');
-var localStorage = require('localStorage');
 
 var connection = mysql.createConnection({
     host: '127.0.0.1',
@@ -57,7 +56,7 @@ app.get('/username', function (req, response, next) {
     }
 });
 
-app.get('/delete', function (req, response, next) {
+app.get('/delete-user', function (req, response, next) {
     var $q = "DELETE FROM users WHERE id_user = '" + req.query.id_user + "'";
     var query = connection.query($q, function (err, rows) {
         if (err) {
@@ -98,7 +97,7 @@ app.get('/tests', function (req, response, next) {
 });
 
 app.get('/tests-add', function (req, response, next) {
-    $App.render(response, 'tests-form');
+    $App.render(response, 'tests-add');
 });
 
 $App.render = function (res, page, params) {
@@ -127,8 +126,6 @@ function log(msg) {
 }
 
 function isLogged() {
-    //log(localStorage.getItem('logged'));
-    //log(localStorage.getItem('logged') ==  'true');
     if (!$App.logged)$App.logged = (localStorage.getItem('logged') == 'true');
     return $App.logged;
 }
@@ -149,7 +146,7 @@ app.get('/users-list', function (req, response, next) {
     });
 });
 
-app.use('/login', function (req, response, next) {
+app.post('/login', function (req, response, next) {
     var $q = "SELECT * FROM users WHERE nick = '" + req.body.login_name + "' and pw = md5('" + req.body.login_pw + "')";
     console.log($q);
     var query = connection.query($q, function (err, rows) {
@@ -161,13 +158,13 @@ app.use('/login', function (req, response, next) {
                 $App.logged = true;
                 $App.user_name = rows[0].nick;
                 $App.full_name = rows[0].fullname;
-                localStorage.setItem('logged', true);
+                //localStorage.setItem('logged', true);
 
                 $App.render(response, 'index');
                 $App.logout = setTimeout(function () {
                     $App.logged = false;
                     console.log('Odhlaseno');
-                    localStorage.clear();
+                    //localStorage.clear();
                 }, $App.autologout);
             } else {
                 console.log('Failed: ' + $q);
@@ -177,9 +174,9 @@ app.use('/login', function (req, response, next) {
     });
 });
 
-app.use('/logout', function (req, response, next) {
+app.get('/logout', function (req, response, next) {
     $App.logged = false;
-    response.send('done');
+    $App.render(response,'login');
 });
 
 server.listen(app.get('port'), function () {

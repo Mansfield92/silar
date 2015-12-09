@@ -83,6 +83,8 @@ p
     margin-top: 10px
     +media($tablet)
       margin-top: 20px
+  &.active, &.ui-state-active
+    background: lighten($color-dark,15%)
 
 .btn-basic
   @extend %btn-basic

@@ -39,11 +39,39 @@ $App.logout = function(){
 $App.centerGrid = function(){
     $grid = $('#grid');
     $grid.centerTop().css('marginTop',Math.max(0,parseInt($grid.css('marginTop'))-30) + "px");
+};
 
+$App.checkbox = function(){
+    $('.add_form__answers input:checkbox').each(function(){
+        $(this).button();
+    });
+};
+
+$App.testForm = function(){
+    $App.checkbox();
+    $('.ajax-action').click(function(e){
+        e.preventDefault();
+        var $action = $(this).data('action');
+        if($action.indexOf('answer') != -1){
+            var $q = $action.substr($action.indexOf('%')+1);
+            var $before = $($(this).context.previousElementSibling);
+            var $id = $before.find('input:first-of-type').attr('name');
+            var $ans = $id.substr($id.indexOf('answer')+6,$id.indexOf('-'));
+            $id = $id.substr($id.indexOf('-')+1);
+            //log($q);
+            log('bagr');
+            log($ans);
+            log($id);
+        }else{
+
+        }
+        //log($(this).data('action'));
+    });
 };
 
 $App.init = function(){
     $App.resize();
+    $App.testForm();
 };
 
 $App.resize = function(){

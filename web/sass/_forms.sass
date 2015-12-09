@@ -5,9 +5,34 @@
   +media($tablet)
     padding: 20px
     margin-bottom: 20px
+  &__answers, &__row
+    input:not(.checkbox)
+      @extend %basic-input
+
+  &__answers
+
+    input:first-of-type
+      margin-left: 170px
+      display: inline-block
+      width: calc(80% - 177px)
+      vertical-align: top
+
+    label[role="button"]
+      width: 20%
+      display: inline-block
+      vertical-align: top
+      margin-left: 5px
+
+  &__splitter
+    border-top: 1px solid #000000
+    margin: 20px auto
+    width: 10%
+    height: 0
+
   &__row
     position: relative
     margin-bottom: 4px
+
     &:last-child
       margin-bottom: 0
 
@@ -21,8 +46,7 @@
         left: 0
         width: 150px
 
-    input
-      @extend %basic-input
+    input:not(.checkbox)
       width: 100%
       +media($phone)
         width: calc(100% - 170px)

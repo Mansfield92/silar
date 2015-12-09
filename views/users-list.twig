@@ -2,7 +2,7 @@
 {% block body %}
 <section>
     <div class="container">
-        <button onclick="window.location.replace('/users-add')" href="/users-add" class="btn-actions btn-add ajax-action btn-basic"> Přidat uživatele</button>
+        <button onclick="window.location.replace('/users-add')" class="btn-actions btn-add ajax-action btn-basic"> Přidat uživatele</button>
         <div class="users-list">
             {% for item in rows %}
             <div class="users-list_item">
@@ -17,7 +17,7 @@
                 </div><div class="users-list_item_column users-list_item_column-small">
                     <img alt="icon" src="icons/search.svg">
                 </div><div class="users-list_item_column users-list_item_column-small">
-                    <a href="/delete?id_user={{ item.id_user }}"> <img alt="icon" src="icons/delete.svg"></a>
+                    <a href="/delete-user?id_user={{ item.id_user }}"> <img alt="icon" src="icons/delete.svg"></a>
                 </div>
             </div>
             {% endfor %}
