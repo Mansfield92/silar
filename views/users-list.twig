@@ -15,9 +15,9 @@
                         {{ item.fullname }}
                     </div>
                 </div><div class="users-list_item_column users-list_item_column-small">
-                    <img alt="icon" src="icons/search.svg">
+                    <a href="/results?id_user={{ item.id_user }}"> <img alt="icon" src="icons/search.svg"></a>
                 </div><div class="users-list_item_column users-list_item_column-small">
-                    <a href="/delete-user?id_user={{ item.id_user }}"> <img alt="icon" src="icons/delete.svg"></a>
+                    <a class="delete-user" href="/delete-user?id_user={{ item.id_user }}"> <img alt="icon" src="icons/delete.svg"></a>
                 </div>
             </div>
             {% endfor %}

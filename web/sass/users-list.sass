@@ -1,7 +1,35 @@
-.users-list
+.tests-list
+  &.tests-list-3
+    .tests-list_item
+      &_column
+        +media($phone)
+          width: calc(100% / 3)
+  &.tests-list-4
+    .tests-list_item
+      &_column
+        +media($phone)
+          width: 25%
+
+.users-list, .tests-list
   &_item
     background: $transparent-back
     margin-top: 5px
+
+    &.test-bad
+      background: $transparent-back-red
+    &.test-done
+      background: $transparent-back-green
+
+    &-header
+      background: $color-dark
+      color: $color-white
+
+      .tests-list_item_column
+        &-small
+          cursor: default
+          &:hover
+            background: $color-dark
+
     &_column
       height: 45px
       line-height: 45px
@@ -35,6 +63,18 @@
     &_text
       padding: 0 20px
       line-height: 45px
+
+.tests-list
+  &_item
+    &_column
+      &-small
+        +media($phone)
+          width: 15%
+        a
+          display: block
+          width: 100%
+          height: 100%
+
 
 .depos-list
   .depos-list_item

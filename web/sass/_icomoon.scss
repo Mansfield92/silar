@@ -1,0 +1,47 @@
+@font-face {
+	font-family: 'icomoon';
+    src:url('/fonts/extraico.eot?hf4ims');
+    src:url('/fonts/extraico.eot?hf4ims#iefix') format('embedded-opentype'),
+        url('/fonts/extraico.ttf?hf4ims') format('truetype'),
+        url('/fonts/extraico.woff?hf4ims') format('woff'),
+        url('/fonts/extraico.svg?hf4ims#extraico') format('svg');
+//	src:url('/fonts/icomoon.woff?etq938') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.icomoon:before {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icomoon-arrow-right-empty:before {
+	content: "\e608";
+}
+.icomoon-arrow-left-2:before {
+	content: "\e600";
+}
+.icomoon-arrow-right-2:before {
+	content: "\e601";
+}
+.icomoon-arrow-up:before {
+	content: "\e602";
+}
+.icomoon-arrow-right:before {
+	content: "\e603";
+}
+.icomoon-arrow-down:before {
+	content: "\e604";
+}
+.icomoon-arrow-left:before {
+	content: "\e605";
+}

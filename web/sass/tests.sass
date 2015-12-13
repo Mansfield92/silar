@@ -1,0 +1,96 @@
+.white-box
+  background: $transparent-back
+  margin: 10px 0 0
+
+  &-error
+    padding: 10px
+    text-align: center
+    +font(24px, 24px)
+    +media($tablet)
+      padding: 20px
+    button
+      float: none
+      display: block
+      margin: 20px auto 0
+
+  &:first-child
+    margin-top: 0
+
+  .test-desc
+    text-align: center
+    width: 100%
+    padding: 10px
+
+    +media($tablet)
+      padding: 20px
+
+    &:first-child
+      +font(40px, 48px)
+
+    &-50
+      +font(24px, 32px)
+      border-top: 1px solid $color-black
+
+      +media($tablet)
+        display: inline-block
+        //width: 50%
+      &:last-child
+        //border-left: 1px solid $color-black
+
+  .question
+    &-desc, &-row
+      padding: 10px
+      +media($tablet)
+        padding: 20px
+    &-desc
+      +font(28px,28px)
+      border-bottom: 1px solid $color-black
+
+@keyframes pulse
+  50%
+    background-color: #9f081c
+
+.remaining-time
+  position: fixed
+  right: 0
+  bottom: 50%
+  +transform(translateY(-45%))
+  +transition(0.5s)
+  color: $color-white
+  padding: 10px 0
+  +font(18px,30px)
+  text-align: center
+
+  &.behind
+    right: -100px
+
+  &.warning
+    animation: pulse 1s ease-out 59
+
+  +size(100px,80px)
+  background: $color-dark
+
+  .hide-time
+    +size(40px,40px)
+    background: $color-dark
+    position: absolute
+    left: -40px
+    top: 50%
+    +transform(translateY(-50%))
+    cursor: pointer
+    transition: 0.5s
+    &:before
+      font-size: 10px
+      position: absolute
+      right: 13px
+      top: 50%
+      transform: translateY(-45%)
+      +transition(0.2s)
+      color: $color-white
+
+    &:hover
+      background: lighten($color-dark,15%)
+
+    &.rotated
+      &:before
+        +transform(scale(-1) translateY(40%))

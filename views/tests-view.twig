@@ -1,0 +1,64 @@
+{% extends 'header.twig' %}
+{% block body %}
+    <section>
+        <div class="container">
+            {% set letter = 0 %}
+            {% if username != 'admin' %}
+            <form action="/submit-test" method="post" id="testform">
+                {% endif %}
+                <div class="white-box">
+                    <div class="test-desc">{{ rows[0].name }}</div>
+                    <input type="hidden" name="id_test" value="{{ rows[0].id_test }}">
+
+                    <div class="test-desc test-desc-50">Počet bodů: {{ points }}</div>
+                    {#<div class="test-desc test-desc-50">Počet bodů: {{ points }}</div>#}
+                    {#<div class="test-desc test-desc-50">Časový limit (minuty): {{ rows[0].timelimit }}</div>#}
+                </div>
+                {% set quest = 'false' %}
+                {% for item in rows %}
+                {% if item.id_question != quest %}
+                {% if quest == 'false' %}
+                <div class="white-box">
+            {% else %}
+            </div>
+                <div class="white-box">
+                    {% endif %}
+
+                    <div class="question-desc">
+                        {{ item.question_name ~ ' [' ~ item.points ~ ']' }}
+                    </div>
+
+                    {% set letter = 0 %}
+                    {% set quest = item.id_question %}
+                    {% endif %}
+                    <div class="question-row">
+                        {% if username != 'admin' %}
+                            <input type="checkbox" name="check{{ item.id_question ~ '-' ~ item.id_answer }}" id="check{{ item.id_question ~ '-' ~ item.id_answer }}" value="checked"/>
+                        {% else %}
+                            <input type="checkbox"  disabled="disabled" {{ item.correct == 'true' ? 'checked' : '' }} name="check{{ item.id_question ~ '-' ~ item.id_answer }}" id="check{{ item.id_question ~ '-' ~ item.id_answer }}"/>
+                        {% endif %}
+                        <label for="check{{ item.id_question ~ '-' ~ item.id_answer }}" class="question-answer">{{ (letter == 0 ? 'A)' : letter == 1 ? 'B)' : letter == 2 ? 'C)' : 'D)')  ~ ' ' ~ item.answer }}</label>
+
+                        {% set letter = letter + 1 %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if username != 'admin' %}
+                <button class="btn-basic margin-top10-20 ">Vyhodnotit test</button>
+            </form>
+            {% endif %}
+        </div>
+
+    {#{% if username != 'admin' %}#}
+        {#<div class="remaining-time">#}
+            {#<div>Zbývá</div>#}
+            {#<div class="timer">{{ rows[0].timelimit }}</div>#}
+
+            {#<div class="hide-time icomoon icomoon-arrow-right-2">#}
+
+            {#</div>#}
+        {#</div>#}
+    {#{% endif %}#}
+
+    </section>
+{% endblock %}

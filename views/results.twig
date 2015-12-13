@@ -1,0 +1,52 @@
+{% extends 'header.twig' %}
+{% block body %}
+    <section>
+        <div class="container">
+            <div class="search-row">
+                <input type="text" placeholder="Filtrace testů a uživatelů" class="form-control" id="search">
+            </div>
+            <div class="tests-list tests-list-4">
+                <div class="tests-list_item tests-list_item-header">
+                    <div class="tests-list_item_column">
+                        <div class="tests-list_item_text">
+                            Název testu
+                        </div>
+                    </div><div class="tests-list_item_column tests-list_item_column-small">
+                        <div class="tests-list_item_text">
+                            Student
+                        </div>
+                    </div><div class="tests-list_item_column tests-list_item_column-small">
+                        <div class="tests-list_item_text">
+                            Výsledek
+                        </div>
+                    </div><div class="tests-list_item_column tests-list_item_column-small">
+                        <div class="tests-list_item_text">
+                            Smazat
+                        </div>
+                    </div>
+                </div>
+                {% for item in tests %}
+                    <div class="tests-list_item {% if (item.splnen == 'true') %}test-done{% else %}test-bad{% endif %}" data-search="{{ item.name ~ item.fullname ~ item.done}} ">
+                        <div class="tests-list_item_column">
+                            <div class="tests-list_item_text">
+                                {{ item.name }}
+                            </div>
+                        </div><div class="tests-list_item_column">
+                            <div class="tests-list_item_text">
+                                {{ item.fullname }}
+                            </div>
+                        </div><div class="tests-list_item_column">
+                            <div class="tests-list_item_text">
+                                {{ item.vysledek }}
+                            </div>
+                        </div><div class="tests-list_item_column tests-list_item_column-small">
+                            <div class="tests-list_item_text">
+                                <a class="delete-result" href="/delete-result?id_test={{ item.id_test }}&id_user={{ item.id_user }}"> <img alt="icon" src="icons/delete.svg"></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+        </div>
+    </section>
+{% endblock %}

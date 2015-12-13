@@ -2,32 +2,89 @@
 {% block body %}
 <section>
     <div class="container">
-        <button onclick="window.location.replace('/tests-add')" class="btn-actions btn-add ajax-action btn-basic"> Přidat test</button>
+
+        {% if username == 'admin' %} <button onclick="window.location.replace('/tests-add')" class="btn-actions btn-add ajax-action btn-basic"> Přidat test</button>{% endif %}
         <div class="search-row">
                 <input type="text" placeholder="Filtrace testů" class="form-control" id="search">
             </div>
-            <div class="users-list">
-                {% for item in rows %}
-                    <div class="users-list_item">
-                        <div class="users-list_item_column">
-                            <div class="users-list_item_text">
-                                {{ item.name }}
-                            </div>
-                        </div><div class="users-list_item_column">
-                            <div class="users-list_item_text">
-                                {{ item.timelimit}}
-                            </div>
-                        </div>{% if username == 'admin' %}<div class="users-list_item_column users-list_item_column-small">
-                            <img alt="icon" src="icons/search.svg">
-                        </div><div class="users-list_item_column users-list_item_column-small">
-                            <a href="/delete-test?id_test={{ item.id_test }}"> <img alt="icon" src="icons/delete.svg"></a>
-                        </div>{% else %}<div class="users-list_item_column users-list_item_column-small">
-                    {#<img alt="icon" src="icons/search.svg">#}Start
-                    </div><div class="users-list_item_column users-list_item_column-small">
-                    <a href="/results-list?user={{ username }}"> <img alt="icon" src="icons/search.svg"></a>
+            <div class="tests-list">
+
+                <div class="tests-list_item tests-list_item-header">
+                    <div class="tests-list_item_column">
+                        <div class="tests-list_item_text">
+                            Název testu
+                        </div>
+                    </div>{#<div class="tests-list_item_column tests-list_item_column-small">
+                        <div class="tests-list_item_text">
+                            Doba [minuty]
+                        </div>
+                    </div>#}<div class="tests-list_item_column tests-list_item_column-small">
+                        <div class="tests-list_item_text">
+                            Počet otázek
+                        </div>
+                    </div><div class="tests-list_item_column tests-list_item_column-small">
+                        <div class="tests-list_item_text">
+                            Maximum bodů
+                        </div>
+                    </div><div class="tests-list_item_column tests-list_item_column-small">
+                        <div class="tests-list_item_text">
+                            {% if username == 'admin' %}Zobrazit{% else %}Spuštění{% endif %}
+                        </div>
+                    </div><div class="tests-list_item_column tests-list_item_column-small">
+                        <div class="tests-list_item_text">
+                            {% if username == 'admin' %}Smazat{% else %}Výsledky{% endif %}
+                        </div>
                     </div>
+                </div>
+
+                {% for item in tests %}
+                    {% set finished = false %}
+                    {% set result = false %}
+                    {% for did in done %}
+                        {% if (did.id_user == userid) and (did.id_test == item.id_test) %}
+                            {% set result = did.splnen %}
+                            {% set finished = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <div class="tests-list_item {% if (finished == true) %}{% if (result == 'true') %}test-done{% else %}test-bad{% endif %}{% endif %}" data-search="{{ item.nazev ~ item.limit ~ item.otazek ~ item.bodu}} ">
+                        <div class="tests-list_item_column">
+                            <div class="tests-list_item_text">
+                                {{ item.nazev }}
+                            </div>
+                        </div>{#<div class="tests-list_item_column tests-list_item_column-small">
+                            <div class="tests-list_item_text">
+                                {{ item.limit }}
+                            </div>
+                        </div>#}<div class="tests-list_item_column tests-list_item_column-small">
+                            <div class="tests-list_item_text">
+                                {{ item.otazek}}
+                            </div>
+                        </div><div class="tests-list_item_column tests-list_item_column-small">
+                            <div class="tests-list_item_text">
+                                {{ item.bodu}}
+                            </div>
+                        </div>{% if username == 'admin' %}<div class="tests-list_item_column tests-list_item_column-small">
+                            <a href="/view-test?id_test={{ item.id_test }}"><img alt="icon" src="icons/search.svg"></a>
+                        </div><div class="tests-list_item_column tests-list_item_column-small">
+                            <a class="delete-test" href="/delete-test?id_test={{ item.id_test }}"> <img alt="icon" src="icons/delete.svg"></a>
+                        </div>{% else %}<div class="tests-list_item_column tests-list_item_column-small">
+                    {% if finished == true %}
+                        test už byl spuštěn
+                    {% else %}
+                        <a href="start-test?id_test={{ item.id_test }}"><img alt="icon" src="icons/start.svg"></a>
+                    {% endif %}
+                    </div><div class="tests-list_item_column tests-list_item_column-small">
+
+                    {% if finished == true %}
+                        {% set finished = false %}
+                        {% set result = false %}
+                        <a href="/results-list?user={{ userid }}&test={{ item.id_test }}"> <img alt="icon" src="icons/search.svg"></a>
+                        {% else %}
+                            Nejsou výsledky
+                        {% endif %}
                     </div>
                     {% endif %}
+                    </div>
                 {% endfor %}
             </div>
         </div>

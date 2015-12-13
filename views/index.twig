@@ -8,11 +8,13 @@
                         Testy
                     </a>
                 </div>
-            </div><div class="grid-item" data-action="trains-list">
+            </div>{% if username == 'admin' %}<div class="grid-item" data-action="trains-list">
                 <div class="grid-item_text">
-                    Výsledky
+                    <a href="/results">
+                        Výsledky
+                    </a>
                 </div>
-            </div>{% if username == 'admin' %}<div class="grid-item " data-action="users-list">
+            </div><div class="grid-item " data-action="users-list">
                 <div class="grid-item_text">
                     <a href="/users-list">
                         Uživatelé

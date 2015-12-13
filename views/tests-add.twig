@@ -3,15 +3,15 @@
     <section>
         <div class="container">
             <div class="add_form">
-                <form method="post" action="/add-test">
+                <form method="post" action="/create-test">
                     <div class="add_form__row">
                         <label for="test_name">Název testu</label>
                         <input type="text" placeholder="Název testu" value="" name="test_name">
                     </div>
-                    <div class="add_form__row">
-                        <label for="timelimit">Časový limit</label>
-                        <input type="number" placeholder="Časový limit" value="" name="timelimit">
-                    </div>
+                    {#<div class="add_form__row">#}
+                        {#<label for="timelimit">Časový limit</label>#}
+                        {#<input type="number" placeholder="Časový limit" value="" name="timelimit">#}
+                    {#</div>#}
                     <div class="add_form__splitter">&nbsp;</div>
                     <div class="add_form__row question">
                         <label>Název otázky</label>
@@ -30,7 +30,8 @@
                     <div class="add_form__splitter">&nbsp;</div>
                     <button class='btn-basic center-block ajax-action' data-action="new-question">Přidat další otázku</button>
                     <div class="add_form__splitter">&nbsp;</div>
-                    <button class='btn-basic btn-only-top center-block btn-test' onclick="$App.testForms();">Vytvořit test</button>
+                    {#<button class='btn-basic btn-only-top center-block btn-test' onclick="$App.testForms();">Vytvořit test</button>#}
+                    <button class='btn-basic btn-only-top center-block ' >Vytvořit test</button>
                 </form>
             </div>
         </div>
