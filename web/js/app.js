@@ -143,7 +143,30 @@ $App.deleteTest = function(){
             window.location = $(this).attr('href');
         }
     });
+    $('.add-user').click(function(e){
+        e.preventDefault();
+
+        var $name = validate('string',4,$('input[name="username"]').val());
+        var $pass = validate('string',4,$('input[name="password"]').val());
+        var $full = validate('string',6,$('input[name="fullname"]').val());
+        if($name && $pass && $full){
+            $('#add-user-form').submit();
+        }
+    });
 };
+
+function validate(type,length,data){
+    switch(type){
+        case 'string':
+            return data.length >= length;
+            break;
+        case 'int':
+            var $int = parseInt(data);
+            return ($int > 0 || $int <= 0) && ($int.toString().length >= length);
+            break;
+    }
+    return false;
+}
 
 $App.hideTime = function(){
 
