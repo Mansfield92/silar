@@ -9,7 +9,6 @@ var Twig = require('twig');
 var url = require('url');
 var express = require('express');
 var bodyParser = require('body-parser');
-var async = require('async');
 
 var connection = mysql.createConnection({
     host: '127.0.0.1',
@@ -160,7 +159,7 @@ app.get('/tests', function (req, response, next) {
     connection.query($App.testQuery, function (error, result) {
 
         $tests = result;
-        $done = "SELECT * FROM `results` where id_user = " + $App.user_id;
+        $done = "SELECT * FROM `results` where id_user = " + $App.user_id + " order by id_test desc limit 1";
         connection.query($done, function (error, ress) {
             $done = ress;
             $App.render(response, 'tests-list', {"tests": $tests,"done":$done});
@@ -217,8 +216,8 @@ app.get('/users-list', function (req, response, next) {
 });
 app.get('/results', function (req, response, next) {
     if(typeof req.query.id_user != 'undefined'){
-        var $q = "SELECT name,points as vysledek,splnen, fullname, id_test, id_user  FROM tests left join results using(id_test) left join users using(id_user) WHERE id_user = '"+req.query.id_user+"'";
-    }else $q = "SELECT name,points as vysledek,splnen, fullname, id_test, id_user  FROM tests left join results using(id_test) left join users using(id_user)";
+        var $q = "SELECT name,points as vysledek,splnen, fullname, id_test, id_user  FROM results left join tests using(id_test) left join users using(id_user) WHERE id_user = '"+req.query.id_user+"'";
+    }else $q = "SELECT name,points as vysledek,splnen, fullname, id_test, id_user  FROM results left join tests using(id_test) left join users using(id_user) group by id_test,id_user";
     var query = connection.query($q, function (err, rows) {
         if (err) {
             console.log(err);
@@ -335,7 +334,7 @@ app.get('/results-list', function (req, response, next) {
     connection.query($render, function (error, result) {
         $test_res = result;
 
-        $query = "select * from results where id_test = '" + $test + "' and id_user = '"+$user+"' group by id_test";
+        $query = "select * from results where id_test = '" + $test + "' and id_user = '"+$user+"' order by id_test desc limit 1";
         connection.query($query,function (error, result) {
 
             var $done = result[0].splnen == 'true';
@@ -375,7 +374,7 @@ app.post('/submit-test', function (req, response, next) {
 
     $render = "SELECT * FROM tests left join questions using(id_test) left join answer using(id_question) where id_test = '" + $id_test + "'";
     var $query = connection.query($render, function (error, result) {
-        var $points = 0;
+        $App.points = 0;
         var $skip = false;
         var $right = 0;
         var $current = result[0];
@@ -442,25 +441,31 @@ app.post('/submit-test', function (req, response, next) {
         } else {
             if ($fine) {
                 log('V poradku: ' + $current.question_name);
-                $points += $current.points;
+                $App.points += $current.points;
             } else {
                 log('Spatne: ' + $current.question_name);
             }
         }
 
-        $render = "select id_test, name as nazev, count(question_name) as otazek,sum(points) as bodu from tests left join questions using(id_test) where id_test = '" + $id_test + "' group by id_test";
+        var $render = "select id_test, name as nazev, count(question_name) as otazek,sum(points) as bodu from tests left join questions using(id_test) where id_test = '" + $id_test + "' group by id_test";
         connection.query($render, function (error, result) {
-            var $done = (($points / parseInt(result[0].bodu)) * 100) >= 60;
-            log('Pocet bodu: ' + $points + '/' + result[0].bodu + ' {' + $done + '}');
+            $App.result = result;
 
-            $result = "INSERT INTO `silar`.`results` (`id_result`, `id_user`, `id_test`, `points`,`splnen`) VALUES (NULL, ?, ?, ?, ?)";
-            connection.query($result,[$App.user_id,$id_test,($points + '/' + result[0].bodu),$done ? 'true' : 'false'], function (error, result) {});
+            $App.done = (($App.points / parseInt($App.result[0].bodu)) * 100) >= 60;
+            var $print = "INSERT INTO `silar`.`results` (`id_result`, `id_user`, `id_test`, `points`,`splnen`) VALUES (NULL, ?, ?, ?, ?)";
+            connection.query($print,[$App.user_id,$id_test,($App.points + '/' + result[0].bodu),$App.done ? 'true' : 'false'], function (error, result) {
+                if(!error){
+                    log(error);
+                    //log('Pocet bodu: ' + $App.points + '/' + $App.result[0].bodu + ' {' + $done + '}');
+                    $App.render(response, 'tests-result', {'testresult': '<p>Počet bodů: ' + $App.points + '/' + $App.result[0].bodu + '</p><p>Test ' + ($App.done ? 'byl splněn.' : 'nebyl splněn.') + '</p>'});
+                }else{
+                    $App.render(response, 'error-page', {'error': 'chyba'});
+                }
+            });
 
-            $App.render(response, 'tests-result', {'testresult': '<p>Počet bodů: ' + $points + '/' + result[0].bodu + '</p><p>Test ' + ($done ? 'byl splněn.' : 'nebyl splněn.') + '</p>'});
         });
     });
 });
-
 
 
 server.listen(app.get('port'), function () {
